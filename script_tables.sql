@@ -13,11 +13,27 @@ CREATE TABLE [level_usuarios] (
 
 CREATE INDEX [PRIMARY key] ON  [level_usuarios] ([idlevel]);
 
+create table [categoria](
+ [id_categoria] int identity(1,1) primary key,
+ [desc_categoria] varchar(50)
+);
+
+create table [marca](
+	[id_marca] int identity(1,1) primary key,
+	[desc_marca] varchar(50)
+);
+
 CREATE TABLE [articulos] (
   [idart] int identity(1,1) primary key,
   [descart] varchar(150),
   [prec_compra] float,
-  [prec_venta] float
+  [prec_venta] float,
+  [imagen] image,
+  [año_modelo] varchar(20),
+  [id_categoria] int,
+  [id_marca] int,
+  foreign key ([id_categoria]) references [categoria]([id_categoria]),
+  foreign key ([id_marca]) references [marca]([id_marca])
 );
 
 CREATE INDEX [PRIMARY key] ON  [articulos] ([idart]);
@@ -180,6 +196,7 @@ CREATE TABLE [ventas] (
   [id_cli] date,
   [iduser] int,
   [total] float,
+  [descuento] float,
   [idstatus] int,
   CONSTRAINT [FK_ventas.iduser]
     FOREIGN KEY ([iduser])
